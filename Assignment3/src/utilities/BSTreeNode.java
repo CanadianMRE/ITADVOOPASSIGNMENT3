@@ -5,6 +5,10 @@ public class BSTreeNode<E> {
 	private BSTreeNode<E> right;
 	private E element;
 	
+	public BSTreeNode(E element) {
+		this.element = element;
+	}
+	
 	public BSTreeNode(E element, BSTreeNode<E> left, BSTreeNode<E> right) {
 		this.left = left;
 		this.right = right;
