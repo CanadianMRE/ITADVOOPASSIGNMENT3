@@ -55,42 +55,43 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 
 	@Override
 	public BSTreeNode<E> search(E entry) throws TreeException {
-		if (isEmpty()) {
-			throw new TreeException();
-		}
+	    if (isEmpty()) {
+	        throw new TreeException();
+	    }
 
-		boolean foundEnd = false;
-		BSTreeNode<E> currentNode = root;
-		while (!foundEnd) {
-			if (currentNode.getElement().equals(entry)) {
-				return currentNode;
-			} else if (entry.compareTo(currentNode.getElement()) > 0) {
-				// Move left
-				BSTreeNode<E> leftNode = currentNode.getLeft();
-				
-				if (leftNode == null) {
-					// Add to this position
-					foundEnd = true;
-				} else {
-					// Continue the search
-					currentNode = leftNode;
-				}
-			} else {
-				// Move right
-				BSTreeNode<E> rightNode = currentNode.getRight();
-				
-				if (rightNode == null) {
-					// Add to this position
-					foundEnd = true;
-				} else {
-					// Continue the search
-					currentNode = rightNode;
-				}
-			}
-		}
-		
-		return null;
+	    boolean foundEnd = false;
+	    BSTreeNode<E> currentNode = root;
+	    while (!foundEnd) {
+	        if (currentNode.getElement().equals(entry)) {
+	            return currentNode; // Return the node when the element is found
+	        } else if (entry.compareTo(currentNode.getElement()) > 0) {
+	            // Move left
+	            BSTreeNode<E> leftNode = currentNode.getLeft();
+
+	            if (leftNode == null) {
+	                // Add to this position
+	                foundEnd = true;
+	            } else {
+	                // Continue the search
+	                currentNode = leftNode;
+	            }
+	        } else {
+	            // Move right
+	            BSTreeNode<E> rightNode = currentNode.getRight();
+
+	            if (rightNode == null) {
+	                // Add to this position
+	                foundEnd = true;
+	            } else {
+	                // Continue the search
+	                currentNode = rightNode;
+	            }
+	        }
+	    }
+
+	    return null; // Return null only if the element is not found
 	}
+
 
 	@Override
 	public boolean add(E newEntry) throws NullPointerException {

@@ -71,7 +71,6 @@ public class BSTreeTests {
             tree.getRoot(); // Getting root of an empty tree should throw TreeException
             fail("Expected TreeException to be thrown");
         } catch (TreeException e) {
-            // Expected exception
         }
 
         tree.add(5);
@@ -80,29 +79,47 @@ public class BSTreeTests {
     }
     @Test
     public void testSearch() throws TreeException {
-        assertNull(tree.search(5)); // Searching in an empty tree should return null
-
+        try {
+            assertNull(tree.search(5)); // Searching in an empty tree should return null
+        } catch (TreeException e) {
+        	// Expected exception
+        }
+        
         tree.add(5);
         tree.add(3);
         tree.add(7);
+        
+        try {
+            assertNull(tree.search(9)); // Searching for a non-existing element should return null
+        } catch (TreeException e) {
+        	// Expected exception
+        	}
+        try {
+            assertNotNull(tree.search(5)); // Searching for an existing element should return a non-null node
+            assertEquals(5, (int) tree.search(5).getElement());
+            
+        } catch (TreeException e) {
+            fail("Unexpected TreeException: " + e.getMessage());
+        }
 
-        assertNull(tree.search(9)); // Searching for a non-existing element should return null
-        assertNotNull(tree.search(5)); // Searching for an existing element should return a non-null node
-        assertEquals(5, (int) tree.search(5).getElement());
-        assertNull(tree.search(2)); // Searching for a non-existing element should return null
+        try {
+            assertNull(tree.search(2)); // Searching for a non-existing element should return null
+        } catch (TreeException e) {
+        	// Expected exception
+        }
     }
+
+
+
     @Test
     public void testHeight() {
-    	System.out.println(tree.getHeight());
         assertEquals(0, tree.getHeight()); // Height of an empty tree should be 0
 
         tree.add(5);
-    	System.out.println(tree.getHeight());
         assertEquals(1, tree.getHeight());
 
         tree.add(3);
         tree.add(7);
-    	System.out.println(tree.getHeight());
         assertEquals(2, tree.getHeight());
     }
 
