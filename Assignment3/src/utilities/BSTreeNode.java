@@ -8,12 +8,6 @@ public class BSTreeNode<E> {
 	public BSTreeNode(E element) {
 		this.element = element;
 	}
-	
-	public BSTreeNode(E element, BSTreeNode<E> left, BSTreeNode<E> right) {
-		this.left = left;
-		this.right = right;
-		this.element = element;
-	}
 
 	public BSTreeNode<E> getLeft() {
 		return left;
@@ -33,10 +27,6 @@ public class BSTreeNode<E> {
 
 	public E getElement() {
 		return element;
-	}
-
-	public void setElement(E element) {
-		this.element = element;
 	}
 
 }

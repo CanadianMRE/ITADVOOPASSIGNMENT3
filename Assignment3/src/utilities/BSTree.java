@@ -1,8 +1,7 @@
 package utilities;
 
 import java.util.ArrayList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.NoSuchElementException;
 
 import exceptions.TreeException;
 
@@ -64,7 +63,7 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 	    while (!foundEnd) {
 	        if (currentNode.getElement().equals(entry)) {
 	            return currentNode; // Return the node when the element is found
-	        } else if (entry.compareTo(currentNode.getElement()) > 0) {
+	        } else if (entry.compareTo(currentNode.getElement()) < 0) {
 	            // Move left
 	            BSTreeNode<E> leftNode = currentNode.getLeft();
 
@@ -116,7 +115,7 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 		while (!foundEnd) {
 			depth++;
 			
-			if (newEntry.compareTo(currentNode.getElement()) > 0) {
+			if (newEntry.compareTo(currentNode.getElement()) < 0) {
 				// Move left
 				BSTreeNode<E> leftNode = currentNode.getLeft();
 				
@@ -151,25 +150,141 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 		return true;
 	}
 
+	private void StashInOrder(ArrayList<E> list, BSTreeNode<E> node) {
+		if (node == null) {
+			return;
+		}
+		
+		StashInOrder(list, node.getLeft());
+		
+		list.add(node.getElement());
+		
+		StashInOrder(list, node.getRight());
+	}
+	
+	private class InOrderIterator implements Iterator<E> {
+		private ArrayList<E> list;
+		private int currentIndex = 0;
+		
+		public InOrderIterator() {
+			list = new ArrayList<E>();
+			
+			// Initialize Array
+			if (root != null) {
+				StashInOrder(list, root);
+			}
+		}
+		
+		public boolean hasNext() {
+			return currentIndex <= list.size() - 1;
+		}
+		
+		public E next() throws NoSuchElementException {
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+
+			currentIndex++;
+
+			return list.get(currentIndex - 1);
+		}
+	}
+	
 	@Override
 	public Iterator<E> inorderIterator() {
-		ArrayList<BSTreeNode<E>> nodeList = new ArrayList<>();
-		// TODO Auto-generated method stub
-		return null;
+		return new InOrderIterator();
 	}
 
+	private void StashPreOrder(ArrayList<E> list, BSTreeNode<E> node) {
+		if (node == null) {
+			return;
+		}
+		
+		list.add(node.getElement());
+		
+		StashPreOrder(list, node.getLeft());
+		
+		StashPreOrder(list, node.getRight());
+	}
+
+	
+	private class PreOrderIterator implements Iterator<E> {
+		private ArrayList<E> list;
+		private int currentIndex = 0;
+		
+		public PreOrderIterator() {
+			list = new ArrayList<E>();
+			
+			// Initialize Array
+			if (root != null) {
+				StashPreOrder(list, root);
+			}
+		}
+		
+		public boolean hasNext() {
+			return currentIndex <= list.size() - 1;
+		}
+		
+		public E next() throws NoSuchElementException {
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+
+			currentIndex++;
+
+			return list.get(currentIndex - 1);
+		}
+	}
+	
 	@Override
 	public Iterator<E> preorderIterator() {
-		ArrayList<BSTreeNode<E>> nodeList = new ArrayList<>();
-		// TODO Auto-generated method stub
-		return null;
+		return new PreOrderIterator();
+	}
+
+	private void StashPostOrder(ArrayList<E> list, BSTreeNode<E> node) {
+		if (node == null) {
+			return;
+		}
+		
+		StashPostOrder(list, node.getLeft());
+		
+		StashPostOrder(list, node.getRight());
+		
+		list.add(node.getElement());
+	}
+
+	
+	private class PostOrderIterator implements Iterator<E> {
+		private ArrayList<E> list;
+		private int currentIndex = 0;
+		
+		public PostOrderIterator() {
+			list = new ArrayList<E>();
+			
+			// Initialize Array
+			if (root != null) {
+				StashPostOrder(list, root);
+			}
+		}
+		
+		public boolean hasNext() {
+			return currentIndex <= list.size() - 1;
+		}
+		
+		public E next() throws NoSuchElementException {
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+
+			currentIndex++;
+
+			return list.get(currentIndex - 1);
+		}
 	}
 
 	@Override
 	public Iterator<E> postorderIterator() {
-		Stack<BSTreeNode<E>> nodeStack = new Stack<>();
-		// TODO Auto-generated method stub
-		return null;
+		return new PostOrderIterator();
 	}
 
 }
