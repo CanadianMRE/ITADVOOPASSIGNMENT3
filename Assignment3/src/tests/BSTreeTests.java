@@ -125,11 +125,11 @@ public class BSTreeTests {
         tree.add(8);
 
         Iterator<Integer> iterator = tree.preorderIterator();
-        StringBuilder result = new StringBuilder();
+        String result = "";
         while (iterator.hasNext()) {
-            result.append(iterator.next()).append(" ");
+            result += iterator.next() + " ";
         }
-        assertEquals("5 3 2 4 7 6 8 ", result.toString());
+        assertEquals("5 3 2 4 7 6 8 ", result);
     }
 
     @Test
@@ -143,10 +143,10 @@ public class BSTreeTests {
         tree.add(8);
 
         Iterator<Integer> iterator = tree.postorderIterator();
-        StringBuilder result = new StringBuilder();
+        String result = "";
         while (iterator.hasNext()) {
-            result.append(iterator.next()).append(" ");
+            result += iterator.next() + " ";
         }
-        assertEquals("2 4 3 6 8 7 5 ", result.toString());
+        assertEquals("2 4 3 6 8 7 5 ", result);
     }
 }
