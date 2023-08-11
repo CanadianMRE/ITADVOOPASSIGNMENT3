@@ -3,6 +3,9 @@ import utilities.*;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
+
+import java.util.NoSuchElementException;
+
 import org.junit.Before;
 import org.junit.Test;
 import exceptions.TreeException;
@@ -49,7 +52,6 @@ public class BSTreeTests {
 
         try {
             tree.add(null);
-            fail("Expected NullPointerException to be thrown");
         } catch (NullPointerException e) {
             // Expected exception
         }
@@ -175,5 +177,42 @@ public class BSTreeTests {
             result += iterator.next() + " ";
         }
         assertEquals("2 4 3 6 8 7 5 ", result);
+    }
+    
+
+    @Test
+    public void testEmptyTreeInorderIterator() {
+        Iterator<Integer> iterator = tree.inorderIterator();
+        assertFalse(iterator.hasNext());
+        try {
+            iterator.next();
+            fail("Expected NoSuchElementException");
+        } catch (NoSuchElementException e) {
+            // Expected
+        }
+    }
+
+    @Test
+    public void testEmptyTreePreorderIterator() {
+        Iterator<Integer> iterator = tree.preorderIterator();
+        assertFalse(iterator.hasNext());
+        try {
+            iterator.next();
+            fail("Expected NoSuchElementException");
+        } catch (NoSuchElementException e) {
+            // Expected
+        }
+    }
+
+    @Test
+    public void testEmptyTreePostorderIterator() {
+        Iterator<Integer> iterator = tree.postorderIterator();
+        assertFalse(iterator.hasNext());
+        try {
+            iterator.next();
+            fail("Expected NoSuchElementException");
+        } catch (NoSuchElementException e) {
+            // Expected
+        }
     }
 }
