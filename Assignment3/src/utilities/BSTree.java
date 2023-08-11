@@ -2,35 +2,35 @@ package utilities;
 
 import exceptions.TreeException;
 
-public class BSTree<E> implements BSTreeADT {
+public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> { 
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private BSTreeNode<E> root;
+	private int height = 0;
+	private int size = 0;
 
 	@Override
 	public BSTreeNode<E> getRoot() throws TreeException {
-		// TODO Auto-generated method stub
-		return null;
+		return root;
 	}
 
 	@Override
 	public int getHeight() {
-		// TODO Auto-generated method stub
-		return 0;
+		return height;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return size == 0;
 	}
 
 	@Override
@@ -40,19 +40,20 @@ public class BSTree<E> implements BSTreeADT {
 	}
 
 	@Override
-	public boolean contains(Comparable entry) throws TreeException {
+	public boolean contains(E entry) throws TreeException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public BSTreeNode<E> search(Comparable entry) throws TreeException {
+	public BSTreeNode<E> search(E entry) throws TreeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean add(Comparable newEntry) throws NullPointerException {
+	public boolean add(E newEntry) throws NullPointerException {
+		
 		// TODO Auto-generated method stub
 		return false;
 	}
