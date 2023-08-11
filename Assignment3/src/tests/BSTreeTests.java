@@ -35,6 +35,7 @@ public class BSTreeTests {
 
     @Test
     public void testContains() throws TreeException {
+        tree.add(4);
         assertFalse(tree.contains(5));
         tree.add(5);
         assertTrue(tree.contains(5));
@@ -45,7 +46,13 @@ public class BSTreeTests {
         assertTrue(tree.add(5));
         assertFalse(tree.isEmpty());
         assertEquals(1, tree.size());
-        assertFalse(tree.add(null)); // Adding null should throw NullPointerException
+
+        try {
+            tree.add(null);
+            fail("Expected NullPointerException to be thrown");
+        } catch (NullPointerException e) {
+            // Expected exception
+        }
     }
 
     @Test
@@ -86,13 +93,16 @@ public class BSTreeTests {
     }
     @Test
     public void testHeight() {
+    	System.out.println(tree.getHeight());
         assertEquals(0, tree.getHeight()); // Height of an empty tree should be 0
 
         tree.add(5);
+    	System.out.println(tree.getHeight());
         assertEquals(1, tree.getHeight());
 
         tree.add(3);
         tree.add(7);
+    	System.out.println(tree.getHeight());
         assertEquals(2, tree.getHeight());
     }
 

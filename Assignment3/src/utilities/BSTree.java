@@ -19,6 +19,10 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 
 	@Override
 	public BSTreeNode<E> getRoot() throws TreeException {
+		if (root == null) {
+			throw new TreeException();
+		}
+		
 		return root;
 	}
 
@@ -106,7 +110,7 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 		}
 		
 		boolean foundEnd = false;
-		int depth = 0;
+		int depth = 1;
 		BSTreeNode<E> currentNode = root;
 		while (!foundEnd) {
 			depth++;
