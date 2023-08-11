@@ -32,15 +32,13 @@ public class WordInfo implements Comparable<WordInfo> {
     public int getOccurrences() {
         return occurrences;
     }
-    public void incrementFrequency() {
-    	occurrences++;
-    }
-
+  
     public void addLine(String file, int lineNumber) {
         files.add(file);
         lines.add(lineNumber);
+        occurrences++; // Increment occurrences when adding a line
     }
-
+    
     @Override
     public int compareTo(WordInfo other) {
         return word.compareTo(other.word);

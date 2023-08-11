@@ -52,44 +52,21 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 		return search(entry) != null;
 	}
 
-	@Override
-	public BSTreeNode<E> search(E entry) throws TreeException {
-	    if (isEmpty()) {
-	        throw new TreeException();
-	    }
-
-	    boolean foundEnd = false;
-	    BSTreeNode<E> currentNode = root;
-	    while (!foundEnd) {
-	        if (currentNode.getElement().equals(entry)) {
-	            return currentNode; // Return the node when the element is found
-	        } else if (entry.compareTo(currentNode.getElement()) < 0) {
-	            // Move left
-	            BSTreeNode<E> leftNode = currentNode.getLeft();
-
-	            if (leftNode == null) {
-	                // Add to this position
-	                foundEnd = true;
+	 @Override
+	    public BSTreeNode<E> search(E entry) throws TreeException {
+	        BSTreeNode<E> currentNode = root;
+	        while (currentNode != null) {
+	            if (entry.equals(currentNode.getElement())) {
+	                return currentNode;
+	            } else if (entry.compareTo(currentNode.getElement()) < 0) {
+	                currentNode = currentNode.getLeft();
 	            } else {
-	                // Continue the search
-	                currentNode = leftNode;
-	            }
-	        } else {
-	            // Move right
-	            BSTreeNode<E> rightNode = currentNode.getRight();
-
-	            if (rightNode == null) {
-	                // Add to this position
-	                foundEnd = true;
-	            } else {
-	                // Continue the search
-	                currentNode = rightNode;
+	                currentNode = currentNode.getRight();
 	            }
 	        }
-	    }
 
-	    return null; // Return null only if the element is not found
-	}
+	        return null;
+	    }
 
 
 	@Override
