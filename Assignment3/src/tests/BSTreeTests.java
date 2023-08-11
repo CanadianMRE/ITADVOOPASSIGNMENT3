@@ -107,11 +107,11 @@ public class BSTreeTests {
         tree.add(8);
 
         Iterator<Integer> iterator = tree.inorderIterator();
-        StringBuilder result = new StringBuilder();
+        String result = "";
         while (iterator.hasNext()) {
-            result.append(iterator.next()).append(" ");
+            result += iterator.next() + " ";
         }
-        assertEquals("2 3 4 5 6 7 8 ", result.toString());
+        assertEquals("2 3 4 5 6 7 8 ", result);
     }
 
     @Test
