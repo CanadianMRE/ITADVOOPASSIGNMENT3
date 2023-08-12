@@ -38,9 +38,9 @@ java -jar WordTracker.jar <input.txt> -pf/-pl/-po [-f <output.txt>]
 
 Example Usage:
 --------------
-java -jar .\WordTracker.jar res/textfile.html -pf -f output.txt
-java -jar .\WordTracker.jar res/textfile.html -pl
-java -jar .\WordTracker.jar res/textfile.html -po -f output.txt
+java -jar .\WordTracker.jar res/textfile.txt -pf -f output.txt
+java -jar .\WordTracker.jar res/textfile.txt -pl
+java -jar .\WordTracker.jar res/textfile.txt -po -f output.txt
 
 Additional Information:
 ------------------------
