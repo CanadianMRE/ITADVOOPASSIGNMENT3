@@ -3,7 +3,10 @@ package utilities;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * The Word class represents a word along with its occurrences in various files and line numbers.
+ * It provides methods for adding occurrences and generating formatted string representations.
+ */
 public class Word {
     private String word;
     private Map<String, FileInfo> fileOccurrences;

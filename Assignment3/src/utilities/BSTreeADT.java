@@ -1,6 +1,4 @@
-/**
- * BSTreeADT
- */
+
 package utilities;
 
 import java.io.*;
@@ -8,14 +6,12 @@ import java.io.*;
 import exceptions.TreeException;
 
 /**
+ *
+ * Abstract data type specification for a simple binary tree implementation.
  * @author dwatson, kitty
  * @version 1.1
  * Created: Nov 27, 2008
  * Updated: Nov 23, 2019
- *
- * Class Description: Abstract data type specification for a simple
- * Binary Tree implementation.
- * 
  */
 public interface BSTreeADT<E extends Comparable<? super E>> extends	Serializable
 {

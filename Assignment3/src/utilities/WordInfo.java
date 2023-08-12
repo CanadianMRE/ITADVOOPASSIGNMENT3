@@ -2,7 +2,10 @@ package utilities;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * The WordInfo class manages information about words and their occurrences in different files and lines.
+ * It provides methods for adding words, generating formatted output, and storing Word objects.
+ */
 public class WordInfo {
 	private Map<String, Word> Words;
 	private ArrayList<Word> OrderedWords;

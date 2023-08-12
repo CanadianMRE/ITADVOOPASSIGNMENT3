@@ -5,7 +5,22 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-
+/**
+ * The SerializeBTree class provides utility methods for serializing and deserializing a binary search tree (BST)
+ * containing TreeWord objects. It allows the saving and loading of a BST to and from a file using Java's serialization.
+ *
+ * The class provides methods to:
+ * - Load a serialized binary search tree (BST) from a file.
+ * - Serialize a binary search tree (BST) containing TreeWord objects to a file.
+ *
+ * Serialized files are read and written using Java's ObjectInputStream and ObjectOutputStream, respectively.
+ *
+ * This utility class helps manage the persistence of a binary search tree containing TreeWord objects by
+ * allowing developers to save and restore the state of the tree from a serialized file.
+ *
+ * @see BSTree
+ * @see TreeWord
+ */
 public class SerializeBTree {
     public static final String SERIALIZED_FILE_NAME = "res/repository.ser";
     

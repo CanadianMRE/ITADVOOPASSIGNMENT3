@@ -1,7 +1,11 @@
 package utilities;
 
 import java.io.Serializable;
-
+/**
+ * The TreeWord class represents a word found in a text file, along with information about its occurrence.
+ * It implements the Comparable interface to allow comparison based on word lexicographical order.
+ * The class is serializable for storage and retrieval of word data.
+ */
 public class TreeWord implements Comparable<TreeWord>, Serializable {
 	/**
 	 * A unique identifier for serialization purposes.
