@@ -2,6 +2,7 @@ package utilities;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.Stack;
 
 import exceptions.TreeException;
 
@@ -59,15 +60,14 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 	            if (entry.equals(currentNode.getElement())) {
 	                return currentNode;
 	            } else if (entry.compareTo(currentNode.getElement()) < 0) {
-	                currentNode = currentNode.getLeft();
-	            } else {
-	                currentNode = currentNode.getRight();
-	            }
-	        }
+					currentNode = currentNode.getLeft();
+				} else {
+				currentNode = currentNode.getRight();
+			}
+		}
 
-	        return null;
-	    }
-
+		return null;
+	}
 
 	@Override
 	public boolean add(E newEntry) throws NullPointerException {
@@ -75,9 +75,9 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 		if (newEntry == null) {
 			throw new NullPointerException();
 		}
-		
+
 		BSTreeNode<E> newNode = new BSTreeNode<E>(newEntry);
-		
+
 		// If we have no root, make this head
 		if (root == null) {
 			root = newNode;
@@ -85,17 +85,17 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 			size++;
 			return true;
 		}
-		
+
 		boolean foundEnd = false;
 		int depth = 1;
 		BSTreeNode<E> currentNode = root;
 		while (!foundEnd) {
 			depth++;
-			
+
 			if (newEntry.compareTo(currentNode.getElement()) < 0) {
 				// Move left
 				BSTreeNode<E> leftNode = currentNode.getLeft();
-				
+
 				if (leftNode == null) {
 					// Add to this position
 					currentNode.setLeft(newNode);
@@ -107,7 +107,7 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 			} else {
 				// Move right
 				BSTreeNode<E> rightNode = currentNode.getRight();
-				
+
 				if (rightNode == null) {
 					// Add to this position
 					currentNode.setRight(newNode);
@@ -118,11 +118,11 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 				}
 			}
 		}
-		
+
 		if (depth > height) {
 			height = depth;
 		}
-		
+
 		size++;
 		return true;
 	}
@@ -132,30 +132,49 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 			return;
 		}
 		
-		StashInOrder(list, node.getLeft());
+		Stack<BSTreeNode<E>> stack = new Stack<>();
+
+		BSTreeNode<E> currentNode = node;
 		
-		list.add(node.getElement());
+		while (currentNode != null || stack.size() > 0) {
+			
+			while (currentNode != null) {
+				
+				stack.push(currentNode);
+				currentNode = currentNode.getLeft();
+			}
+			
+			currentNode = stack.pop();
+			
+			list.add(currentNode.getElement());
+			
+			currentNode = currentNode.getRight();
+		}
 		
-		StashInOrder(list, node.getRight());
+//		StashInOrder(list, node.getLeft());
+//		
+//		list.add(node.getElement());
+//		
+//		StashInOrder(list, node.getRight());
 	}
-	
+
 	private class InOrderIterator implements Iterator<E> {
 		private ArrayList<E> list;
 		private int currentIndex = 0;
-		
+
 		public InOrderIterator() {
 			list = new ArrayList<E>();
-			
+
 			// Initialize Array
 			if (root != null) {
 				StashInOrder(list, root);
 			}
 		}
-		
+
 		public boolean hasNext() {
 			return currentIndex <= list.size() - 1;
 		}
-		
+
 		public E next() throws NoSuchElementException {
 			if (!hasNext()) {
 				throw new NoSuchElementException();
@@ -166,7 +185,7 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 			return list.get(currentIndex - 1);
 		}
 	}
-	
+
 	@Override
 	public Iterator<E> inorderIterator() {
 		return new InOrderIterator();
@@ -176,32 +195,31 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 		if (node == null) {
 			return;
 		}
-		
+
 		list.add(node.getElement());
-		
+
 		StashPreOrder(list, node.getLeft());
-		
+
 		StashPreOrder(list, node.getRight());
 	}
 
-	
 	private class PreOrderIterator implements Iterator<E> {
 		private ArrayList<E> list;
 		private int currentIndex = 0;
-		
+
 		public PreOrderIterator() {
 			list = new ArrayList<E>();
-			
+
 			// Initialize Array
 			if (root != null) {
 				StashPreOrder(list, root);
 			}
 		}
-		
+
 		public boolean hasNext() {
 			return currentIndex <= list.size() - 1;
 		}
-		
+
 		public E next() throws NoSuchElementException {
 			if (!hasNext()) {
 				throw new NoSuchElementException();
@@ -212,7 +230,7 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 			return list.get(currentIndex - 1);
 		}
 	}
-	
+
 	@Override
 	public Iterator<E> preorderIterator() {
 		return new PreOrderIterator();
@@ -222,32 +240,31 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 		if (node == null) {
 			return;
 		}
-		
+
 		StashPostOrder(list, node.getLeft());
-		
+
 		StashPostOrder(list, node.getRight());
-		
+
 		list.add(node.getElement());
 	}
 
-	
 	private class PostOrderIterator implements Iterator<E> {
 		private ArrayList<E> list;
 		private int currentIndex = 0;
-		
+
 		public PostOrderIterator() {
 			list = new ArrayList<E>();
-			
+
 			// Initialize Array
 			if (root != null) {
 				StashPostOrder(list, root);
 			}
 		}
-		
+
 		public boolean hasNext() {
 			return currentIndex <= list.size() - 1;
 		}
-		
+
 		public E next() throws NoSuchElementException {
 			if (!hasNext()) {
 				throw new NoSuchElementException();
