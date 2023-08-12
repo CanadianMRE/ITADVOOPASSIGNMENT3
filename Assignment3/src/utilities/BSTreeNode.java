@@ -2,37 +2,72 @@ package utilities;
 
 import java.io.Serializable;
 
+/**
+ * Represents a node in a Binary Search Tree (BST).
+ *
+ * @param <E> The type of element stored in the node.
+ */
 public class BSTreeNode<E> implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private BSTreeNode<E> left;
-	private BSTreeNode<E> right;
-	private E element;
-	
-	public BSTreeNode(E element) {
-		this.element = element;
-	}
+    /**
+     * The serialization version UID for object persistence.
+     */
+    private static final long serialVersionUID = 1L;
 
-	public BSTreeNode<E> getLeft() {
-		return left;
-	}
+    private BSTreeNode<E> left;   // Reference to the left child node
+    private BSTreeNode<E> right;  // Reference to the right child node
+    private E element;            // The element stored in the node
 
-	public void setLeft(BSTreeNode<E> left) {
-		this.left = left;
-	}
+    /**
+     * Creates a new instance of a BSTreeNode with the given element.
+     *
+     * @param element The element to be stored in the node.
+     */
+    public BSTreeNode(E element) {
+        this.element = element;
+    }
 
-	public BSTreeNode<E> getRight() {
-		return right;
-	}
+    /**
+     * Gets the left child node of this node.
+     *
+     * @return The left child node.
+     */
+    public BSTreeNode<E> getLeft() {
+        return left;
+    }
 
-	public void setRight(BSTreeNode<E> right) {
-		this.right = right;
-	}
+    /**
+     * Sets the left child node of this node.
+     *
+     * @param left The left child node to be set.
+     */
+    public void setLeft(BSTreeNode<E> left) {
+        this.left = left;
+    }
 
-	public E getElement() {
-		return element;
-	}
+    /**
+     * Gets the right child node of this node.
+     *
+     * @return The right child node.
+     */
+    public BSTreeNode<E> getRight() {
+        return right;
+    }
 
+    /**
+     * Sets the right child node of this node.
+     *
+     * @param right The right child node to be set.
+     */
+    public void setRight(BSTreeNode<E> right) {
+        this.right = right;
+    }
+
+    /**
+     * Gets the element stored in this node.
+     *
+     * @return The element stored in the node.
+     */
+    public E getElement() {
+        return element;
+    }
 }

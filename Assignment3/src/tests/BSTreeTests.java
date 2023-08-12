@@ -1,4 +1,5 @@
 package tests;
+
 import utilities.*;
 
 import static org.junit.Assert.*;
@@ -10,7 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 import exceptions.TreeException;
 
-
+/**
+ * Unit tests for the BSTree class.
+ */
 public class BSTreeTests {
 
     private BSTree<Integer> tree;
@@ -73,33 +76,35 @@ public class BSTreeTests {
             tree.getRoot(); // Getting root of an empty tree should throw TreeException
             fail("Expected TreeException to be thrown");
         } catch (TreeException e) {
+            // Expected
         }
 
         tree.add(5);
         assertNotNull(tree.getRoot());
         assertEquals(5, (int) tree.getRoot().getElement());
     }
+
     @Test
     public void testSearch() throws TreeException {
         try {
             assertNull(tree.search(5)); // Searching in an empty tree should return null
         } catch (TreeException e) {
-        	// Expected exception
+            // Expected exception
         }
-        
+
         tree.add(5);
         tree.add(3);
         tree.add(7);
-        
+
         try {
             assertNull(tree.search(9)); // Searching for a non-existing element should return null
         } catch (TreeException e) {
-        	// Expected exception
-        	}
+            // Expected exception
+        }
         try {
             assertNotNull(tree.search(5)); // Searching for an existing element should return a non-null node
             assertEquals(5, (int) tree.search(5).getElement());
-            
+
         } catch (TreeException e) {
             fail("Unexpected TreeException: " + e.getMessage());
         }
@@ -107,11 +112,9 @@ public class BSTreeTests {
         try {
             assertNull(tree.search(2)); // Searching for a non-existing element should return null
         } catch (TreeException e) {
-        	// Expected exception
+            // Expected exception
         }
     }
-
-
 
     @Test
     public void testHeight() {
@@ -178,7 +181,6 @@ public class BSTreeTests {
         }
         assertEquals("2 4 3 6 8 7 5 ", result);
     }
-    
 
     @Test
     public void testEmptyTreeInorderIterator() {

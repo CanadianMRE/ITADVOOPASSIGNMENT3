@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Stack;
 
-import exceptions.TreeException;
+import exceptions.*;
+
+/**
+ * A binary search tree implementation that implements the BSTreeADT interface.
+ *
+ * @param <E> The type of elements stored in the binary search tree.
+ */
 
 public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> { 
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	
 	private BSTreeNode<E> root;
@@ -127,155 +131,171 @@ public class BSTree<E extends Comparable<? super E>> implements BSTreeADT<E> {
 		return true;
 	}
 
-	private void StashInOrder(ArrayList<E> list, BSTreeNode<E> node) {
-		if (node == null) {
-			return;
-		}
-		
-		Stack<BSTreeNode<E>> stack = new Stack<>();
+    /**
+     * Stashes the elements of the tree in an inorder traversal into the given list.
+     * 
+     * @param list The list to store the elements in inorder traversal order.
+     * @param node The current node being processed during the traversal.
+     */
+    private void StashInOrder(ArrayList<E> list, BSTreeNode<E> node) {
+        if (node == null) {
+            return;
+        }
+        
+        Stack<BSTreeNode<E>> stack = new Stack<>();
+        BSTreeNode<E> currentNode = node;
+        
+        while (currentNode != null || !stack.isEmpty()) {
+            while (currentNode != null) {
+                stack.push(currentNode);
+                currentNode = currentNode.getLeft();
+            }
+            
+            currentNode = stack.pop();
+            list.add(currentNode.getElement());
+            currentNode = currentNode.getRight();
+        }
+    }
 
-		BSTreeNode<E> currentNode = node;
-		
-		while (currentNode != null || stack.size() > 0) {
-			
-			while (currentNode != null) {
-				
-				stack.push(currentNode);
-				currentNode = currentNode.getLeft();
-			}
-			
-			currentNode = stack.pop();
-			
-			list.add(currentNode.getElement());
-			
-			currentNode = currentNode.getRight();
-		}
-		
-//		StashInOrder(list, node.getLeft());
-//		
-//		list.add(node.getElement());
-//		
-//		StashInOrder(list, node.getRight());
-	}
+    /**
+     * An inner class that implements an inorder iterator for the BST.
+     */
+    private class InOrderIterator implements Iterator<E> {
+        private ArrayList<E> list;
+        private int currentIndex = 0;
 
-	private class InOrderIterator implements Iterator<E> {
-		private ArrayList<E> list;
-		private int currentIndex = 0;
+        public InOrderIterator() {
+            list = new ArrayList<E>();
 
-		public InOrderIterator() {
-			list = new ArrayList<E>();
+            // Initialize Array
+            if (root != null) {
+                StashInOrder(list, root);
+            }
+        }
 
-			// Initialize Array
-			if (root != null) {
-				StashInOrder(list, root);
-			}
-		}
+        public boolean hasNext() {
+            return currentIndex <= list.size() - 1;
+        }
 
-		public boolean hasNext() {
-			return currentIndex <= list.size() - 1;
-		}
+        public E next() throws NoSuchElementException {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
 
-		public E next() throws NoSuchElementException {
-			if (!hasNext()) {
-				throw new NoSuchElementException();
-			}
+            currentIndex++;
+            return list.get(currentIndex - 1);
+        }
+    }
 
-			currentIndex++;
+    @Override
+    public Iterator<E> inorderIterator() {
+        return new InOrderIterator();
+    }
 
-			return list.get(currentIndex - 1);
-		}
-	}
+    /**
+     * Stashes the elements of the tree in a preorder traversal into the given list.
+     * 
+     * @param list The list to store the elements in preorder traversal order.
+     * @param node The current node being processed during the traversal.
+     */
+    private void StashPreOrder(ArrayList<E> list, BSTreeNode<E> node) {
+        if (node == null) {
+            return;
+        }
 
-	@Override
-	public Iterator<E> inorderIterator() {
-		return new InOrderIterator();
-	}
+        list.add(node.getElement());
 
-	private void StashPreOrder(ArrayList<E> list, BSTreeNode<E> node) {
-		if (node == null) {
-			return;
-		}
+        StashPreOrder(list, node.getLeft());
 
-		list.add(node.getElement());
+        StashPreOrder(list, node.getRight());
+    }
 
-		StashPreOrder(list, node.getLeft());
+    /**
+     * An inner class that implements a preorder iterator for the BST.
+     */
+    private class PreOrderIterator implements Iterator<E> {
+        private ArrayList<E> list;
+        private int currentIndex = 0;
 
-		StashPreOrder(list, node.getRight());
-	}
+        public PreOrderIterator() {
+            list = new ArrayList<E>();
 
-	private class PreOrderIterator implements Iterator<E> {
-		private ArrayList<E> list;
-		private int currentIndex = 0;
+            // Initialize Array
+            if (root != null) {
+                StashPreOrder(list, root);
+            }
+        }
 
-		public PreOrderIterator() {
-			list = new ArrayList<E>();
+        public boolean hasNext() {
+            return currentIndex <= list.size() - 1;
+        }
 
-			// Initialize Array
-			if (root != null) {
-				StashPreOrder(list, root);
-			}
-		}
+        public E next() throws NoSuchElementException {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
 
-		public boolean hasNext() {
-			return currentIndex <= list.size() - 1;
-		}
+            currentIndex++;
+            return list.get(currentIndex - 1);
+        }
+    }
 
-		public E next() throws NoSuchElementException {
-			if (!hasNext()) {
-				throw new NoSuchElementException();
-			}
+    @Override
+    public Iterator<E> preorderIterator() {
+        return new PreOrderIterator();
+    }
 
-			currentIndex++;
+	
 
-			return list.get(currentIndex - 1);
-		}
-	}
+    /**
+     * Stashes the elements of the tree in a postorder traversal into the given list.
+     * 
+     * @param list The list to store the elements in postorder traversal order.
+     * @param node The current node being processed during the traversal.
+     */
+    private void StashPostOrder(ArrayList<E> list, BSTreeNode<E> node) {
+        if (node == null) {
+            return;
+        }
 
-	@Override
-	public Iterator<E> preorderIterator() {
-		return new PreOrderIterator();
-	}
+        StashPostOrder(list, node.getLeft());
 
-	private void StashPostOrder(ArrayList<E> list, BSTreeNode<E> node) {
-		if (node == null) {
-			return;
-		}
+        StashPostOrder(list, node.getRight());
 
-		StashPostOrder(list, node.getLeft());
+        list.add(node.getElement());
+    }
 
-		StashPostOrder(list, node.getRight());
+    /**
+     * An inner class that implements a postorder iterator for the BST.
+     */
+    private class PostOrderIterator implements Iterator<E> {
+        private ArrayList<E> list;
+        private int currentIndex = 0;
 
-		list.add(node.getElement());
-	}
+        public PostOrderIterator() {
+            list = new ArrayList<E>();
 
-	private class PostOrderIterator implements Iterator<E> {
-		private ArrayList<E> list;
-		private int currentIndex = 0;
+            // Initialize Array
+            if (root != null) {
+                StashPostOrder(list, root);
+            }
+        }
 
-		public PostOrderIterator() {
-			list = new ArrayList<E>();
+        public boolean hasNext() {
+            return currentIndex <= list.size() - 1;
+        }
 
-			// Initialize Array
-			if (root != null) {
-				StashPostOrder(list, root);
-			}
-		}
+        public E next() throws NoSuchElementException {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
 
-		public boolean hasNext() {
-			return currentIndex <= list.size() - 1;
-		}
+            currentIndex++;
+            return list.get(currentIndex - 1);
+        }
+    }
 
-		public E next() throws NoSuchElementException {
-			if (!hasNext()) {
-				throw new NoSuchElementException();
-			}
-
-			currentIndex++;
-
-			return list.get(currentIndex - 1);
-		}
-	}
-
+   
 	@Override
 	public Iterator<E> postorderIterator() {
 		return new PostOrderIterator();
